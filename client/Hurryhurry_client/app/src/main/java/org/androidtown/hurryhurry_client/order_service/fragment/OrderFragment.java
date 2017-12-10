@@ -87,10 +87,12 @@ public class OrderFragment extends Fragment {
         return jsonObject.toString();
     }
 
+    //화면 초기화
     private void initScreen() {
         ed_orderFoodName.setText("");
     }
 
+    //토스트
     protected void showToast(int msg) {
         Toast.makeText(mActivity, mActivity.getString(msg), Toast.LENGTH_LONG).show();
     }
@@ -99,6 +101,7 @@ public class OrderFragment extends Fragment {
         Toast.makeText(mActivity, msg, Toast.LENGTH_LONG).show();
     }
 
+    //JSON을 이용한 HTTP 통신
     public class JSONTask extends AsyncTask<String, String, String>{
 
         @Override

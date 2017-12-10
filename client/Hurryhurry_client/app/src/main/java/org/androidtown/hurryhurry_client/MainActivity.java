@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import org.androidtown.hurryhurry_client.order_service.fragment.OrderFragment;
+import org.androidtown.hurryhurry_client.order_service.fragment.RealTimeInfoFragment;
 
 import static java.security.AccessController.getContext;
 import static org.androidtown.hurryhurry_client.R.id.bt_orderingMenu;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mContext = this.getApplicationContext();
         Button bt_orderingMenu = (Button) findViewById(R.id.bt_orderingMenu);
+        Button bt_currentOrder = (Button) findViewById(R.id.bt_currentOrder);
 
         bt_orderingMenu.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -40,6 +42,17 @@ public class MainActivity extends AppCompatActivity {
                 ft.replace(R.id.ll_content, orderFragment).commit();
             }
         });
+
+        bt_currentOrder.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                RealTimeInfoFragment realTimeInfoFragment = new RealTimeInfoFragment();
+                ft.replace(R.id.ll_content, realTimeInfoFragment).commit();
+            }
+        });
+
 
        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

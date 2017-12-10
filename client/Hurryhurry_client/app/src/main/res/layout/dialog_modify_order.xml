@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <!-- 주문 정보 변경 ROW-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5">
+        <TextView
+            style="@style/menu_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주문 정보 변경" />
+    </LinearLayout>
+
+    <!--토핑 변경-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5">
+        <TextView
+            style="@style/table_menu_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="토핑 변경" />
+        <RadioGroup
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.5"
+            android:weightSum="4"
+          >
+            <RadioButton
+                style="@style/content_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가 토핑 없음"
+            />
+            <RadioButton
+                style="@style/content_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="불고기 추가"
+                />
+            <RadioButton
+                style="@style/content_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="햄 추가"
+                />
+            <RadioButton
+                style="@style/content_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="치즈 추가"
+                />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="요청하기"
+            />
+    </LinearLayout>
+</LinearLayout>

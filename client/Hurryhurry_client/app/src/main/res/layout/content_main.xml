@@ -21,10 +21,16 @@
             android:text="주문하기"
             />
         <Button
-            android:id="@+id/bt_orderInfo"
+            android:id="@+id/bt_currentOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="주문현황"
+            android:text="현재주문"
+            />
+        <Button
+            android:id="@+id/bt_orderHistory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주문기록"
             />
     </LinearLayout>
 
