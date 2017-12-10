@@ -25,4 +25,21 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <style name="menu_txt">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">#ff215d68</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="content_txt">
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#ff848484</item>
+    </style>
+
+    <style name="table_menu_txt">
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">#ff3c3c3c</item>
+    </style>
+
+
 </resources>
