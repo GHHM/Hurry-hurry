@@ -139,9 +139,10 @@
             android:text="진행 중" />
 
         <Button
+            android:id="@+id/bt_modify_p1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:text="변경하기" />
     </LinearLayout>
 
@@ -166,9 +167,10 @@
             android:text="진행 전" />
 
         <Button
+            android:id="@+id/bt_modify_p2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:text="변경하기" />
     </LinearLayout>
 
@@ -193,10 +195,10 @@
             android:text="진행 전" />
 
         <Button
+            android:id="@+id/bt_modify_p3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:text="변경하기" />
     </LinearLayout>
-
 </LinearLayout>

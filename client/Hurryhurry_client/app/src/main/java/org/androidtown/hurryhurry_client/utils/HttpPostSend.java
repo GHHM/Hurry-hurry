@@ -28,7 +28,7 @@ import java.net.URLEncoder;
 
 public class HttpPostSend {
 
-    public static final String API_SERVER_URL = "http://192.168.1.46:3000/post";    //test server url
+    public static final String API_SERVER_URL = "http://192.168.0.32:3000/post";    //test server url
     //public static final String API_SERVER_URL = "http://www.icthvn.or.kr:1111/app/";
 
     private static String executeClient(String urlString, String postParams) {

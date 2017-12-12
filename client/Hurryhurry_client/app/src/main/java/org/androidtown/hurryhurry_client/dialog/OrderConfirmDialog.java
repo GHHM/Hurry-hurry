@@ -3,6 +3,7 @@ package org.androidtown.hurryhurry_client.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import org.androidtown.hurryhurry_client.R;
 

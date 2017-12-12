@@ -74,18 +74,7 @@ public class OrderFragment extends Fragment {
         bt_ordering = (Button) rootView.findViewById(R.id.bt_ordering);
     }
 
-    //JSON 오브젝트를 string으로 바꿔준다.
-    private String setRegDataParam() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.accumulate("user_id", "androidTest");
-            jsonObject.accumulate("name", "yun");
-            Log.d("error", jsonObject.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return jsonObject.toString();
-    }
+
 
     //화면 초기화
     private void initScreen() {
@@ -99,6 +88,23 @@ public class OrderFragment extends Fragment {
 
     protected void showToast(String msg) {
         Toast.makeText(mActivity, msg, Toast.LENGTH_LONG).show();
+    }
+
+    //JSON 오브젝트를 string으로 바꿔준다.
+    private String setRegDataParam() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("MEMBER_ID", "androidTest");
+            jsonObject.accumulate("FOOD_NAME", "pizza");
+            jsonObject.accumulate("RFID_ID", "1");
+            jsonObject.accumulate("ARRIVAL_TIME", "20171212");
+            jsonObject.accumulate("PROCESS_1", "complete");
+            jsonObject.accumulate("PROCESS_2", "not yet");
+            jsonObject.accumulate("PROCESS_3", "not yet");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
     }
 
     //JSON을 이용한 HTTP 통신
