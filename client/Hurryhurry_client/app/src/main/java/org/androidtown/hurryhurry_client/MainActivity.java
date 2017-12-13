@@ -12,77 +12,91 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tsengvn.typekit.TypekitContextWrapper;
+
+import org.androidtown.hurryhurry_client.dialog.ModifyOrderDialog;
 import org.androidtown.hurryhurry_client.order_service.fragment.OrderFragment;
 import org.androidtown.hurryhurry_client.order_service.fragment.RealTimeInfoFragment;
 
 import static java.security.AccessController.getContext;
-import static org.androidtown.hurryhurry_client.R.id.bt_orderingMenu;
 
 public class MainActivity extends AppCompatActivity {
 
     public static Context mContext;
+
+/* 사용자에게 주문 현황에 대해 알려주는 아이콘들의 모임!*/
+
+    //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
+    ImageView makingDough_iv;
+    ImageView topping_iv;
+    ImageView bakingPizza_iv;
+
+    //색칠된 조리 과정 아이콘(현재 상황이라는 얘기임!) : 도우 만들기, 토핑 올리기, 오븐에서 굽기
+    ImageView makingDough_ivColored;
+    ImageView topping_ivColored;
+    ImageView bakingPizza_ivColored;
+
+    /* 사용자에게 주문 정보에 대해 알려주는 textView들의 모임!*/
+    TextView memberId_tv;
+    TextView arrivalTime_tv;
+    TextView approvalTime_tv;
+    TextView foodName_tv;
+
+    // 남은 시간에 대해 알려주는 TextVIew;
+    TextView leftTime_tv;
+
+    //주문을 변경할 수 있는 버튼
+    Button changeMenu_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         mContext = this.getApplicationContext();
-        Button bt_orderingMenu = (Button) findViewById(R.id.bt_orderingMenu);
-        Button bt_currentOrder = (Button) findViewById(R.id.bt_currentOrder);
+        init();
 
-        bt_orderingMenu.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                OrderFragment orderFragment = new OrderFragment();
-                ft.replace(R.id.ll_content, orderFragment).commit();
-            }
-        });
-
-        bt_currentOrder.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                RealTimeInfoFragment realTimeInfoFragment = new RealTimeInfoFragment();
-                ft.replace(R.id.ll_content, realTimeInfoFragment).commit();
-            }
-        });
-
-
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        changeMenu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                ModifyOrderDialog dialog = new ModifyOrderDialog(MainActivity.this);
+                dialog.setCancelable(false);
+                dialog.show();
             }
         });
-    }
 
+
+   }
+
+
+   private void init(){
+
+       //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
+       makingDough_iv = (ImageView) findViewById(R.id.making_dough);
+       topping_iv = (ImageView) findViewById(R.id.topping);
+       bakingPizza_iv = (ImageView) findViewById(R.id.baking_pizza);
+
+       //색칠된 조리 과정 아이콘(현재 상황이라는 얘기임!) : 도우 만들기, 토핑 올리기, 오븐에서 굽기
+       makingDough_ivColored = (ImageView) findViewById(R.id.making_dough_colored);
+       topping_ivColored = (ImageView) findViewById(R.id.topping_colored);
+       bakingPizza_ivColored = (ImageView) findViewById(R.id.baking_pizza_colored);
+
+       // 사용자에게 주문 정보를 알려주는 textView
+       memberId_tv = (TextView)findViewById(R.id.member_id_textView);
+       arrivalTime_tv = (TextView)findViewById(R.id.arrival_time_textView);
+       approvalTime_tv = (TextView)findViewById(R.id.approval_time_textView);
+       foodName_tv = (TextView)findViewById(R.id.foodName_textView);
+
+       //남은 시간에 대해 알려주는 textView
+       leftTime_tv = (TextView)findViewById(R.id.left_time);
+
+       //주문 정보를 변경하는 Button
+       changeMenu_button = (Button)findViewById(R.id.changeMenu);
+   }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }
 }

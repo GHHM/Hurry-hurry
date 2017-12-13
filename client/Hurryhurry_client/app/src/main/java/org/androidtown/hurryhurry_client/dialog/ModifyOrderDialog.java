@@ -48,7 +48,7 @@ public class ModifyOrderDialog extends Dialog {
         bt_request.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                setRegDataParam();
             }
         });
 
