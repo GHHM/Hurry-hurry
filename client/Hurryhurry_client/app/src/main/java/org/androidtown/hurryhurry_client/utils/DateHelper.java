@@ -47,7 +47,7 @@ public class DateHelper {
     }
 
     public static final String getCurrentDateTime(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss");
         Date currentDt = new Date();
         return formatter.format(currentDt);
     }

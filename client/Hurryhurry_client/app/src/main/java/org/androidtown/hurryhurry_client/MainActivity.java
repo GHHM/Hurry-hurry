@@ -1,8 +1,10 @@
 package org.androidtown.hurryhurry_client;
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,15 +23,20 @@ import com.tsengvn.typekit.TypekitContextWrapper;
 import org.androidtown.hurryhurry_client.dialog.ModifyOrderDialog;
 import org.androidtown.hurryhurry_client.order_service.fragment.OrderFragment;
 import org.androidtown.hurryhurry_client.order_service.fragment.RealTimeInfoFragment;
+import org.androidtown.hurryhurry_client.utils.DateHelper;
+import org.androidtown.hurryhurry_client.utils.HttpPostSend;
+import org.androidtown.hurryhurry_client.utils.Util;
+import org.json.JSONObject;
 
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
+    protected static Dialog mProgressDialog;
+
     public static Context mContext;
 
 /* 사용자에게 주문 현황에 대해 알려주는 아이콘들의 모임!*/
-
     //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
     ImageView makingDough_iv;
     ImageView topping_iv;
@@ -51,13 +58,18 @@ public class MainActivity extends AppCompatActivity {
 
     //주문을 변경할 수 있는 버튼
     Button changeMenu_button;
+
+    String arrivalTime;
+
+    JSONTask jsonTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContext = this.getApplicationContext();
-        init();
 
+        arrivalTime = DateHelper.getCurrentDateTime();
+        init();
+        jsonTask.execute(setRegDataParam());
         changeMenu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
-
-
    }
 
 
    private void init(){
+
+       jsonTask = new JSONTask();
+       mContext = this.getApplicationContext();
 
        //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
        makingDough_iv = (ImageView) findViewById(R.id.making_dough);
@@ -94,7 +107,49 @@ public class MainActivity extends AppCompatActivity {
 
        //주문 정보를 변경하는 Button
        changeMenu_button = (Button)findViewById(R.id.changeMenu);
+
+       mProgressDialog = Util.showProgressDialog(MainActivity.this);
    }
+
+    //JSON 오브젝트를 string으로 바꿔준다.
+    private String setRegDataParam() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate("MEMBER_ID", "jaena96");
+            jsonObject.accumulate("FOOD_NAME", "불고기 피자");
+            jsonObject.accumulate("RFID_ID", "22135019");
+            jsonObject.accumulate("ARRIVAL_TIME", arrivalTime );
+            jsonObject.accumulate("APPROVAL_TIME", DateHelper.getCurrentDateTime());
+            jsonObject.accumulate("PROCESS_1", "not yet");
+            jsonObject.accumulate("PROCESS_2", "not yet");
+            jsonObject.accumulate("PROCESS_3", "not yet");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    //JSON을 이용한 HTTP 통신
+    public class JSONTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result;
+            result = HttpPostSend.exeRegOrder(setRegDataParam());
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mProgressDialog.dismiss();
+        }
+    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));

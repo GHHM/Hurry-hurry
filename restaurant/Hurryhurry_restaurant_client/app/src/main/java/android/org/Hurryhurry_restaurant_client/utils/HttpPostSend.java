@@ -1,11 +1,11 @@
-package org.androidtown.hurryhurry_client.utils;
+package android.org.Hurryhurry_restaurant_client.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.androidtown.hurryhurry_client.MainActivity;
+import android.org.Hurryhurry_restaurant_client.MainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,8 +28,7 @@ import java.net.URLEncoder;
 
 public class HttpPostSend {
 
-    //잰네 거실 url 192.168.0.109, 멤네 URL 192.168.0.32
-    public static final String API_SERVER_URL = "http://192.168.0.109:3000/post";    //test server url
+    public static final String API_SERVER_URL = "http://192.168.0.109:3000/restaurant";    //test server url
     //public static final String API_SERVER_URL = "http://www.icthvn.or.kr:1111/app/";
 
     private static String executeClient(String urlString, String postParams) {
@@ -52,6 +51,7 @@ public class HttpPostSend {
             writer.write(postParams);
             writer.flush();
             writer.close();//버퍼를 받아줌
+            Log.d("Http",postParams);
             //서버로 부터 데이터를 받음
             InputStream stream = connection.getInputStream();
             reader = new BufferedReader(new InputStreamReader(stream));
@@ -60,6 +60,7 @@ public class HttpPostSend {
             while ((line = reader.readLine()) != null) {
                 buffer.append(line);
             }
+            Log.d("recvFromServer :",buffer.toString());
             return buffer.toString();//서버로 부터 받은 값을 리턴해줌 아마 OK!!가 들어올것임
         } catch (MalformedURLException e) {
             e.printStackTrace();
