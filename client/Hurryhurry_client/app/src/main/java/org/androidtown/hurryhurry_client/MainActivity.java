@@ -17,6 +17,7 @@ import org.androidtown.hurryhurry_client.dialog.ModifyOrderDialog;
 
 import org.androidtown.hurryhurry_client.utils.DateHelper;
 import org.androidtown.hurryhurry_client.utils.HttpPostSend;
+import org.androidtown.hurryhurry_client.utils.JSONUtil;
 import org.androidtown.hurryhurry_client.utils.Util;
 import org.json.JSONObject;
 
@@ -150,8 +151,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            try {
+                JSONObject object = JSONUtil.getJsObject(s);
+
+                String member_id = object.getString("MEMBER_ID");
+                String food_name = object.getString("FOOD_NAME");
+                String rfid_id = object.getString("RFID_ID");
+                String arrival_time = object.getString("ARRIVAL_TIME");
+                String approval_time = object.getString("ARROVAL_TIME");
+                String process_1 = object.getString("PROCESS_1");
+                String process_2 = object.getString("PROCESS_2");
+                String process_3 = object.getString("PROCESS_3");
+
+                //TODO
+                //위에 정의된 스트링을 화면에 나타내기
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
             //Log.d("Response register: ",s);
-            //mProgressDialog.dismiss();
+            mProgressDialog.dismiss();
         }
     }
 
