@@ -1,19 +1,8 @@
 package org.androidtown.hurryhurry_client.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-import android.widget.Toast;
-
-import org.androidtown.hurryhurry_client.MainActivity;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,14 +11,11 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
 
 public class HttpPostSend {
 
     //잰네 거실 url 192.168.0.109, 멤네 URL 192.168.0.32
-    public static final String API_SERVER_URL = "http://192.168.0.2:3000/post";    //test server url
+    public static final String API_SERVER_URL = "http://192.168.0.32:3000/post";    //test server url
     //public static final String API_SERVER_URL = "http://www.icthvn.or.kr:1111/app/";
 
     private static String executeClient(String urlString, String postParams) {
@@ -82,19 +68,19 @@ public class HttpPostSend {
 
     //주문 정보 조회하기
     public static String exeGetOrderInfo(String params) {
-        return executeClient(API_SERVER_URL+"/post/show", params);
+        return executeClient(API_SERVER_URL+"/show", params);
     }
 
     //주문 등록하기
     public static String exeRegOrder(String params) {
         //URL 뒤에 정확한 URL이....
-        return executeClient(API_SERVER_URL+"/post/reg", params);
+        return executeClient(API_SERVER_URL+"/reg", params);
     }
 
     //주문 수정하기
     public static String exeModOrder(String params) {
         //URL 뒤에 정확한 URL이....
-        return executeClient(API_SERVER_URL+"/post/update", params);
+        return executeClient(API_SERVER_URL+"/update", params);
     }
 
 

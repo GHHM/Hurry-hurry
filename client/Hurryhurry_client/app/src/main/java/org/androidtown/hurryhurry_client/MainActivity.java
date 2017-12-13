@@ -4,12 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Dialog;
-
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,14 +20,11 @@ import org.androidtown.hurryhurry_client.utils.HttpPostSend;
 import org.androidtown.hurryhurry_client.utils.Util;
 import org.json.JSONObject;
 
-import org.androidtown.hurryhurry_client.order_service.fragment.OrderFragment;
-import org.androidtown.hurryhurry_client.order_service.fragment.RealTimeInfoFragment;
-
 public class MainActivity extends AppCompatActivity {
     static Dialog mProgressDialog;
     public static Context mContext;
 
-/* 사용자에게 주문 현황에 대해 알려주는 아이콘들의 모임!*/
+    /* 사용자에게 주문 현황에 대해 알려주는 아이콘들의 모임!*/
 
     //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
     ImageView makingDough_iv;
@@ -55,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
     //주문을 변경할 수 있는 버튼
     Button changeMenu_button;
-
     Button bt_refresh;
 
     String arrivalTime;
@@ -64,12 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        arrivalTime = DateHelper.getCurrentDateTime();
-        init();
-//        new RegJSONTask().execute(setRegDataParam());
-
-        mContext = this.getApplicationContext();
+        setContentView(R.layout.activity_main);
         init();
 
         changeMenu_button.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         bt_refresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                new RegJSONTask().execute(setRegDataParam());
+                new ShowJSONTask().execute(setRegDataParam());
             }
         });
 
@@ -98,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
 
-       mContext = this.getApplicationContext();
+        mContext = this.getApplicationContext();
+        arrivalTime = DateHelper.getCurrentDateTime();
 
        //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
        makingDough_iv = (ImageView) findViewById(R.id.making_dough);
@@ -134,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             jsonObject.accumulate("MEMBER_ID", "jaena96");
             jsonObject.accumulate("FOOD_NAME", "불고기 피자");
             jsonObject.accumulate("RFID_ID", "22135019");
-            jsonObject.accumulate("ARRIVAL_TIME", arrivalTime );
+            jsonObject.accumulate("ARRIVAL_TIME", arrivalTime);
             jsonObject.accumulate("APPROVAL_TIME", DateHelper.getCurrentDateTime());
             jsonObject.accumulate("PROCESS_1", "not yet");
             jsonObject.accumulate("PROCESS_2", "not yet");
