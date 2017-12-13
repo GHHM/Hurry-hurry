@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         arrivalTime = DateHelper.getCurrentDateTime();
         init();
-        new RegJSONTask().execute(setRegDataParam());
+//        new RegJSONTask().execute(setRegDataParam());
 
         mContext = this.getApplicationContext();
         init();
@@ -90,8 +90,13 @@ public class MainActivity extends AppCompatActivity {
 
    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new RegJSONTask().execute(setRegDataParam());
+    }
 
-   private void init(){
+    private void init(){
 
        mContext = this.getApplicationContext();
 
@@ -145,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgressDialog.show();
+            //mProgressDialog.show();
         }
 
         @Override
@@ -158,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("Response register: ",s);
-            mProgressDialog.dismiss();
+            //Log.d("Response register: ",s);
+            //mProgressDialog.dismiss();
         }
     }
 
