@@ -1,8 +1,13 @@
 package org.androidtown.hurryhurry_client;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.app.Dialog;
+
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,18 +19,21 @@ import android.widget.TextView;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.androidtown.hurryhurry_client.dialog.ModifyOrderDialog;
+
 import org.androidtown.hurryhurry_client.utils.DateHelper;
 import org.androidtown.hurryhurry_client.utils.HttpPostSend;
 import org.androidtown.hurryhurry_client.utils.Util;
 import org.json.JSONObject;
 
+import org.androidtown.hurryhurry_client.order_service.fragment.OrderFragment;
+import org.androidtown.hurryhurry_client.order_service.fragment.RealTimeInfoFragment;
+
 public class MainActivity extends AppCompatActivity {
-
-    protected static Dialog mProgressDialog;
-
+    static Dialog mProgressDialog;
     public static Context mContext;
 
 /* 사용자에게 주문 현황에 대해 알려주는 아이콘들의 모임!*/
+
     //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
     ImageView makingDough_iv;
     ImageView topping_iv;
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     //주문을 변경할 수 있는 버튼
     Button changeMenu_button;
+
     Button bt_refresh;
 
     String arrivalTime;
@@ -55,10 +64,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
         arrivalTime = DateHelper.getCurrentDateTime();
         init();
         new RegJSONTask().execute(setRegDataParam());
+
+        mContext = this.getApplicationContext();
+        init();
 
         changeMenu_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 new RegJSONTask().execute(setRegDataParam());
             }
         });
+
    }
 
 
@@ -103,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
        //주문 정보를 변경하는 Button
        changeMenu_button = (Button)findViewById(R.id.changeMenu);
+
        bt_refresh = (Button)findViewById(R.id.bt_refresh);
 
        mProgressDialog = Util.showProgressDialog(MainActivity.this);
@@ -171,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
         }
     }
-
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
