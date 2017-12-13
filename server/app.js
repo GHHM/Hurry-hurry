@@ -12,31 +12,43 @@ const promise = mongoose.connect(mongoDB, {
 */
 
 //get으로 읽어오기
+//사용 안함
 app.get('/', (req, res) => {
 });
 
+//show user data
+//require input: MEMBER_ID
+app.post('/post/show',(req,res)=>{
+	console.log('Show customer info ');
+	var inputData;
+	req.on('data',(data)=>{
+		inputData = JSON.parse(data);
+	})
+	req.on('end',()=>{
+		console.log(User.find({MEMBER_ID:inputData.MEMBER_ID}));
+	})
 
+})
+
+// register
 //Http connection with customer
-app.post('/post', (req, res) => {
-
-	const user = new User();
+app.post('/post/reg', (req, res) => {
+	const user = new User(  {MEMBER_ID: 'init',
+	  FOOD_NAME: 'init',
+	  RFID_ID: 'init',
+	  ARRIVAL_TIME: 'init',
+	  APPROVAL_TIME: 'init',
+	 PROCESS_1: 'init',
+	  PROCESS_2: 'init',
+	  PROCESS_3: 'init'});
 
    console.log('Request from costumer');
    var inputData;
    req.on('data', (data) => {
-
      inputData = JSON.parse(data);
-
    });
     req.on('end', () => {
-		console.log("Member id: "+inputData.MEMBER_ID);
-		 console.log("Food name: "+inputData.FOOD_NAME);
-		 console.log("RFID id : "+inputData.RFID_ID);
-		 console.log("Arrival time: "+inputData.ARRIVAL_TIME);
-		 console.log("Approval time: "+inputData.APPROVAL_TIME);
-		 console.log("Process 1: "+inputData.PROCESS_1);
-		 console.log("Process 2: "+inputData.PROCESS_2);
-		 console.log("Process 3: "+inputData.PROCESS_3);
+		console.log(inputData.MEMBER_ID + " "+ inputData.FOOD_NAME+" "+inputData.RFID_ID+" "+inputData.ARRIVAL_TIME+" "+inputData.APPROVAL_TIME+" "+inputData.PROCESS_1+" "+inputData.PROCESS_2+" "+inputData.PROCESS_3);
 
 		 	//setting value
 			user.MEMBER_ID = inputData.MEMBER_ID;
@@ -59,31 +71,16 @@ app.post('/post', (req, res) => {
 		});
    });
 
-   res.write("OK!");
    res.end();
 });
+
+//update user inputData
+app.post('/post/update', (req, res) => {
+
+});
+
 
 module.exports = router;
-
-
-//Http connection with restaurant
-app.post('/restaurant', (req, res) => {
-
-   console.log('Reqeust from restaurant');
-   var inputData;
-   req.on('data', (data) => {
-
-     inputData = JSON.parse(data);
-
-   });
-    req.on('end', () => {
-     console.log("User name : "+inputData.name);
-   });
-
-   res.write("OK!");
-   res.end();
-
-});
 
 
 app.listen(3000, () => {

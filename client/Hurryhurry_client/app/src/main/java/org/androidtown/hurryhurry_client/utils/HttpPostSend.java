@@ -29,7 +29,7 @@ import java.net.URLEncoder;
 public class HttpPostSend {
 
     //잰네 거실 url 192.168.0.109, 멤네 URL 192.168.0.32
-    public static final String API_SERVER_URL = "http://192.168.0.109:3000/post";    //test server url
+    public static final String API_SERVER_URL = "http://192.168.0.32:3000/post";    //test server url
     //public static final String API_SERVER_URL = "http://www.icthvn.or.kr:1111/app/";
 
     private static String executeClient(String urlString, String postParams) {
@@ -82,19 +82,19 @@ public class HttpPostSend {
 
     //주문 정보 조회하기
     public static String exeGetOrderInfo(String params) {
-        return executeClient(API_SERVER_URL, params);
+        return executeClient(API_SERVER_URL+"/post/show", params);
     }
 
     //주문 등록하기
     public static String exeRegOrder(String params) {
         //URL 뒤에 정확한 URL이....
-        return executeClient(API_SERVER_URL, params);
+        return executeClient(API_SERVER_URL+"/post/reg", params);
     }
 
     //주문 수정하기
     public static String exeModOrder(String params) {
         //URL 뒤에 정확한 URL이....
-        return executeClient(API_SERVER_URL, params);
+        return executeClient(API_SERVER_URL+"/post/update", params);
     }
 
 

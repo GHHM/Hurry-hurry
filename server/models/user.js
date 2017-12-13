@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var userSchema = new Schema({
   MEMBER_ID: String,
   FOOD_NAME: String,
-  RFID_ID: Number,
+  RFID_ID: String,
   ARRIVAL_TIME: String,
   APPROVAL_TIME: String,
   PROCESS_1: String,

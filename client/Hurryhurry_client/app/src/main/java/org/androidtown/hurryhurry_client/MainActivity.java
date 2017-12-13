@@ -1,34 +1,23 @@
 package org.androidtown.hurryhurry_client;
 
 import android.app.Dialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tsengvn.typekit.TypekitContextWrapper;
 
 import org.androidtown.hurryhurry_client.dialog.ModifyOrderDialog;
-import org.androidtown.hurryhurry_client.order_service.fragment.OrderFragment;
-import org.androidtown.hurryhurry_client.order_service.fragment.RealTimeInfoFragment;
 import org.androidtown.hurryhurry_client.utils.DateHelper;
 import org.androidtown.hurryhurry_client.utils.HttpPostSend;
 import org.androidtown.hurryhurry_client.utils.Util;
 import org.json.JSONObject;
-
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,18 +47,19 @@ public class MainActivity extends AppCompatActivity {
 
     //주문을 변경할 수 있는 버튼
     Button changeMenu_button;
+    Button bt_refresh;
 
     String arrivalTime;
 
-    JSONTask jsonTask;
+    RegJSONTask regJsonTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         arrivalTime = DateHelper.getCurrentDateTime();
         init();
-        jsonTask.execute(setRegDataParam());
+        new RegJSONTask().execute(setRegDataParam());
+
         changeMenu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,12 +68,18 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        bt_refresh.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                new RegJSONTask().execute(setRegDataParam());
+            }
+        });
    }
 
 
    private void init(){
 
-       jsonTask = new JSONTask();
        mContext = this.getApplicationContext();
 
        //색칠되지 않은 조리 과정 아이콘 : 도우 만들기, 토핑 올리기, 오븐에서 굽기
@@ -107,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
        //주문 정보를 변경하는 Button
        changeMenu_button = (Button)findViewById(R.id.changeMenu);
+       bt_refresh = (Button)findViewById(R.id.bt_refresh);
 
        mProgressDialog = Util.showProgressDialog(MainActivity.this);
    }
@@ -129,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
         return jsonObject.toString();
     }
 
-    //JSON을 이용한 HTTP 통신
-    public class JSONTask extends AsyncTask<String, String, String> {
+    //JSON을 이용한 HTTP 통신_등록
+    public class RegJSONTask extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -147,9 +144,34 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            Log.d("Response register: ",s);
             mProgressDialog.dismiss();
         }
     }
+
+    //JSON을 이용한 HTTP 통신_정보보기
+    public class ShowJSONTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String result;
+            result = HttpPostSend.exeGetOrderInfo(setRegDataParam());
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("Response show data: ",s);
+            mProgressDialog.dismiss();
+        }
+    }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));

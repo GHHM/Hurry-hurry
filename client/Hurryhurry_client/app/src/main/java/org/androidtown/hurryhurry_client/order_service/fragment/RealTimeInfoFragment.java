@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import org.androidtown.hurryhurry_client.R;
 import org.androidtown.hurryhurry_client.dialog.ModifyOrderDialog;
+import org.androidtown.hurryhurry_client.utils.DateHelper;
 import org.androidtown.hurryhurry_client.utils.HttpPostSend;
 import org.androidtown.hurryhurry_client.utils.Util;
 import org.json.JSONObject;
@@ -61,11 +62,12 @@ public class RealTimeInfoFragment extends Fragment{
     private String setRegDataParam() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.accumulate("MEMBER_ID", "androidTest");
-            jsonObject.accumulate("FOOD_NAME", "pizza");
-            jsonObject.accumulate("RFID_ID", "1");
-            jsonObject.accumulate("ARRIVAL_TIME", "20171212");
-            jsonObject.accumulate("PROCESS_1", "complete");
+            jsonObject.accumulate("MEMBER_ID", "jaena96");
+            jsonObject.accumulate("FOOD_NAME", "불고기 피자");
+            jsonObject.accumulate("RFID_ID", "22135019");
+            jsonObject.accumulate("ARRIVAL_TIME", DateHelper.getCurrentDateTime() );
+            jsonObject.accumulate("APPROVAL_TIME", DateHelper.getCurrentDateTime());
+            jsonObject.accumulate("PROCESS_1", "done");
             jsonObject.accumulate("PROCESS_2", "not yet");
             jsonObject.accumulate("PROCESS_3", "not yet");
         } catch (Exception e) {
@@ -85,7 +87,7 @@ public class RealTimeInfoFragment extends Fragment{
         @Override
         protected String doInBackground(String... params) {
             String result;
-            result = HttpPostSend.exeRegOrder(setRegDataParam());
+            result = HttpPostSend.exeModOrder(setRegDataParam());
             return result;
         }
 

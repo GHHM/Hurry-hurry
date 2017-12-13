@@ -61,7 +61,7 @@ public class OrderFragment extends Fragment {
         bt_ordering.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //new JSONTask().execute("http://192.168.1.46:3000/post");
+                //new RegJSONTask().execute("http://192.168.1.46:3000/post");
                 new JSONTask().execute();
             }
         });
@@ -129,7 +129,7 @@ public class OrderFragment extends Fragment {
         }
     }
 
-  /*  public class JSONTask extends AsyncTask<String, String, String> {
+  /*  public class RegJSONTask extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... urls) {
